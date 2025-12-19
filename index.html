@@ -12,9 +12,42 @@
             height: 100%;
             overflow: hidden;
             background: black;
+        }
+        
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .loading-text {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        /* Main Content - starts hidden */
+        #main-content {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: opacity 1s ease-in;
         }
         
         .center-text {
@@ -24,11 +57,11 @@
             font-weight: bold;
             text-align: center;
             z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
         
         /* Background GIF */
-        body::before {
-            content: '';
+        #background-gif {
             position: fixed;
             top: 0;
             left: 0;
@@ -39,48 +72,88 @@
             background-position: center;
             background-repeat: no-repeat;
             z-index: 1;
+            opacity: 0;
+            transition: opacity 1s ease-in;
         }
     </style>
 </head>
 <body>
-    <div class="center-text">
-        fataldose is currently down...
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-text">Loading...</div>
     </div>
     
-    <!-- Hidden audio element that autoplays and loops -->
-    <audio id="bg-music" autoplay loop style="display: none;">
-        <source src="https://github.com/ikiikikikijujijij-oss/encode/raw/refs/heads/main/life.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Background GIF -->
+    <div id="background-gif"></div>
+    
+    <!-- Main Content -->
+    <div id="main-content">
+        <div class="center-text">
+            fataldose is currently down...
+        </div>
+        
+        <!-- Hidden audio element -->
+        <audio id="bg-music" style="display: none;">
+            <source src="https://github.com/ikiikikikijujijij-oss/encode/raw/refs/heads/main/life.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
     <script>
-        // Immediately start audio when page loads - NO CLICKS NEEDED
-        (function() {
-            const audio = document.getElementById('bg-music');
+        // Get elements
+        const loadingScreen = document.getElementById('loading-screen');
+        const mainContent = document.getElementById('main-content');
+        const backgroundGif = document.getElementById('background-gif');
+        const audio = document.getElementById('bg-music');
+        
+        // Set audio properties
+        audio.volume = 1.0;
+        audio.loop = true;
+        
+        // Function to fade out loading screen and fade in content
+        function startTransition() {
+            // Start audio first (it might take a moment to load)
+            playAudio();
             
-            // Set audio properties
-            audio.volume = 1.0;
-            audio.loop = true;
+            // Fade out loading screen
+            loadingScreen.style.opacity = '0';
             
-            // TRY TO PLAY IMMEDIATELY - NO WAITING FOR EVENTS
-            audio.play().catch(e => {
-                // If blocked, create and click invisible button automatically
-                const playBtn = document.createElement('button');
-                playBtn.style.display = 'none';
-                playBtn.id = 'autoPlayBtn';
-                document.body.appendChild(playBtn);
+            // After loading screen fades out, fade in background and content
+            setTimeout(() => {
+                // Hide loading screen completely
+                loadingScreen.style.display = 'none';
                 
-                // Auto-click the button
-                setTimeout(() => {
-                    playBtn.click();
-                }, 10);
+                // Fade in background GIF
+                backgroundGif.style.opacity = '1';
                 
-                // Remove button after
-                setTimeout(() => {
-                    if(playBtn.parentNode) {
+                // Fade in main content
+                mainContent.style.opacity = '1';
+                
+            }, 500); // Wait for loading screen fade out to complete
+        }
+        
+        // Function to play audio with autoplay handling
+        function playAudio() {
+            // Try to play immediately
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(e => {
+                    // If blocked by browser policy
+                    console.log('Audio play blocked, waiting for interaction');
+                    
+                    // Create and auto-click invisible button
+                    const playBtn = document.createElement('button');
+                    playBtn.style.display = 'none';
+                    playBtn.textContent = 'Play';
+                    document.body.appendChild(playBtn);
+                    
+                    // Auto-click after a short delay
+                    setTimeout(() => {
+                        playBtn.click();
                         document.body.removeChild(playBtn);
-                    }
-                }, 100);
-            });
+                    }, 10);
+                });
+            }
             
             // Prevent pausing
             audio.addEventListener('pause', function(e) {
@@ -94,16 +167,10 @@
                     audio.play();
                 }
             }, 100);
-        })();
+        }
         
-        // Force audio on page load
-        window.onload = function() {
-            const audio = document.getElementById('bg-music');
-            audio.play().catch(e => {
-                // Try again on load
-                setTimeout(() => audio.play(), 50);
-            });
-        };
+        // Start everything after a brief moment (1 second for dramatic effect)
+        setTimeout(startTransition, 1000);
     </script>
 </body>
 </html>
