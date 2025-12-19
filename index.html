@@ -3,685 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fatal.exe | Modern Cybersecurity Learning</title>
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/auth.css">
-    <link rel="stylesheet" href="styles/components.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>fataldose</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .center-text {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        /* Background GIF */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://raw.githubusercontent.com/ikiikikikijujijij-oss/encode/refs/heads/main/life.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+    </style>
 </head>
 <body>
-    <!-- Auth Container -->
-    <div id="authContainer">
-        <div class="auth-wrapper">
-            <!-- Login Page -->
-            <div class="auth-page active" id="loginPage">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <div class="logo-auth">
-                            <span class="logo-icon">F</span>
-                            <span class="logo-text">fatal<span>.exe</span></span>
-                        </div>
-                        <h1>Welcome Back</h1>
-                        <p class="auth-subtitle">Sign in to continue your cybersecurity journey</p>
-                    </div>
-                    
-                    <form id="loginForm" class="auth-form">
-                        <div class="form-group">
-                            <label for="loginEmail" class="form-label">
-                                <i class="fas fa-envelope"></i> Email Address
-                            </label>
-                            <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
-                            <div class="error-message" id="loginEmailError"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="loginPassword" class="form-label">
-                                <i class="fas fa-lock"></i> Password
-                            </label>
-                            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
-                            <div class="error-message" id="loginPasswordError"></div>
-                        </div>
-                        
-                        <div class="form-options">
-                            <label class="checkbox">
-                                <input type="checkbox" id="rememberMe">
-                                <span class="checkmark"></span>
-                                Remember me
-                            </label>
-                            <a href="#" class="forgot-link" id="forgotPassword">Forgot password?</a>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <i class="fas fa-sign-in-alt"></i> Sign In
-                        </button>
-                    </form>
-                    
-                    <div class="auth-divider">
-                        <span>or</span>
-                    </div>
-                    
-                    <button class="btn btn-google btn-block">
-                        <i class="fab fa-google"></i> Continue with Google
-                    </button>
-                    
-                    <div class="auth-footer">
-                        <p>Don't have an account? <a href="#" id="showRegister">Create Account</a></p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Register Page -->
-            <div class="auth-page" id="registerPage">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <div class="logo-auth">
-                            <span class="logo-icon">F</span>
-                            <span class="logo-text">fatal<span>.exe</span></span>
-                        </div>
-                        <h1>Create Account</h1>
-                        <p class="auth-subtitle">Join the cybersecurity revolution</p>
-                    </div>
-                    
-                    <form id="registerForm" class="auth-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="registerFirstName" class="form-label">
-                                    <i class="fas fa-user"></i> First Name
-                                </label>
-                                <input type="text" id="registerFirstName" class="form-input" placeholder="Enter first name" required>
-                                <div class="error-message" id="registerFirstNameError"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="registerLastName" class="form-label">
-                                    <i class="fas fa-user"></i> Last Name
-                                </label>
-                                <input type="text" id="registerLastName" class="form-input" placeholder="Enter last name" required>
-                                <div class="error-message" id="registerLastNameError"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="registerEmail" class="form-label">
-                                <i class="fas fa-envelope"></i> Email Address
-                            </label>
-                            <input type="email" id="registerEmail" class="form-input" placeholder="Enter your email" required>
-                            <div class="error-message" id="registerEmailError"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="registerPassword" class="form-label">
-                                <i class="fas fa-lock"></i> Password
-                            </label>
-                            <input type="password" id="registerPassword" class="form-input" placeholder="Create a strong password" required>
-                            <div class="password-strength">
-                                <div class="strength-bar"></div>
-                                <div class="strength-bar"></div>
-                                <div class="strength-bar"></div>
-                                <div class="strength-bar"></div>
-                            </div>
-                            <div class="error-message" id="registerPasswordError"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="registerConfirmPassword" class="form-label">
-                                <i class="fas fa-lock"></i> Confirm Password
-                            </label>
-                            <input type="password" id="registerConfirmPassword" class="form-input" placeholder="Confirm your password" required>
-                            <div class="error-message" id="registerConfirmPasswordError"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="checkbox">
-                                <input type="checkbox" id="termsAgreement" required>
-                                <span class="checkmark"></span>
-                                I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
-                            </label>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <i class="fas fa-user-plus"></i> Create Account
-                        </button>
-                    </form>
-                    
-                    <div class="auth-footer">
-                        <p>Already have an account? <a href="#" id="showLogin">Sign In</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="center-text">
+        fataldose is currently down...
     </div>
     
-    <!-- Main App -->
-    <div id="mainApp" class="hidden">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="container">
-                <div class="header-content">
-                    <div class="logo">
-                        <span class="logo-icon">F</span>
-                        <span class="logo-text">fatal<span>.exe</span></span>
-                    </div>
-                    
-                    <nav class="main-nav">
-                        <a href="#" class="nav-link active" data-page="dashboard">
-                            <i class="fas fa-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                        <a href="#" class="nav-link" data-page="lessons">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Lessons</span>
-                        </a>
-                        <a href="#" class="nav-link" data-page="tests">
-                            <i class="fas fa-file-alt"></i>
-                            <span>Tests</span>
-                        </a>
-                        <a href="#" class="nav-link" data-page="progress">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Progress</span>
-                        </a>
-                        <a href="#" class="nav-link" data-page="certificates">
-                            <i class="fas fa-certificate"></i>
-                            <span>Certificates</span>
-                        </a>
-                    </nav>
-                    
-                    <div class="user-menu">
-                        <div class="user-info" id="userDropdown">
-                            <div class="user-avatar">
-                                <span id="userInitials">U</span>
-                            </div>
-                            <div class="user-details">
-                                <span class="user-name" id="userName">User</span>
-                                <span class="user-role" id="userRole">Cybersecurity Student</span>
-                            </div>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="dropdown-menu" id="userDropdownMenu">
-                            <a href="#" class="dropdown-item" data-page="profile">
-                                <i class="fas fa-user"></i> My Profile
-                            </a>
-                            <a href="#" class="dropdown-item" data-page="settings">
-                                <i class="fas fa-cog"></i> Settings
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item" id="logoutBtn">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <button class="mobile-menu-btn" id="mobileMenuBtn">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </header>
-        
-        <!-- Main Content -->
-        <main class="app-main">
-            <div class="container">
-                <div class="page-content">
-                    <!-- Dashboard -->
-                    <div class="page active" id="dashboard">
-                        <div class="page-header">
-                            <h1 class="page-title">Welcome back, <span id="dashboardUserName">User</span></h1>
-                            <p class="page-subtitle">Continue your cybersecurity learning journey</p>
-                        </div>
-                        
-                        <!-- Stats Grid -->
-                        <div class="stats-grid" id="statsGrid">
-                            <!-- Will be populated by JavaScript -->
-                        </div>
-                        
-                        <!-- Quick Actions -->
-                        <div class="section">
-                            <div class="section-header">
-                                <h2>Quick Actions</h2>
-                                <a href="#" class="see-all" data-page="lessons">See all</a>
-                            </div>
-                            <div class="actions-grid">
-                                <div class="action-card">
-                                    <div class="action-icon">
-                                        <i class="fas fa-play-circle"></i>
-                                    </div>
-                                    <div class="action-content">
-                                        <h3>Continue Learning</h3>
-                                        <p>Resume your last lesson</p>
-                                    </div>
-                                    <button class="btn btn-sm btn-outline">Continue</button>
-                                </div>
-                                <div class="action-card">
-                                    <div class="action-icon">
-                                        <i class="fas fa-file-alt"></i>
-                                    </div>
-                                    <div class="action-content">
-                                        <h3>Take a Test</h3>
-                                        <p>Test your knowledge</p>
-                                    </div>
-                                    <button class="btn btn-sm btn-outline" data-page="tests">Start Test</button>
-                                </div>
-                                <div class="action-card">
-                                    <div class="action-icon">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                    <div class="action-content">
-                                        <h3>View Achievements</h3>
-                                        <p>See your progress</p>
-                                    </div>
-                                    <button class="btn btn-sm btn-outline" data-page="progress">View</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Recent Activity -->
-                        <div class="section">
-                            <div class="section-header">
-                                <h2>Recent Activity</h2>
-                            </div>
-                            <div class="activity-list" id="activityList">
-                                <!-- Will be populated by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Lessons Page -->
-                    <div class="page" id="lessons">
-                        <div class="page-header">
-                            <h1 class="page-title">Cybersecurity Lessons</h1>
-                            <p class="page-subtitle">Master cybersecurity through interactive learning</p>
-                        </div>
-                        
-                        <div class="lessons-filter">
-                            <div class="filter-tabs">
-                                <button class="filter-tab active" data-filter="all">All Levels</button>
-                                <button class="filter-tab" data-filter="beginner">Beginner</button>
-                                <button class="filter-tab" data-filter="intermediate">Intermediate</button>
-                                <button class="filter-tab" data-filter="advanced">Advanced</button>
-                            </div>
-                            <div class="search-box">
-                                <i class="fas fa-search"></i>
-                                <input type="text" id="lessonSearch" placeholder="Search lessons...">
-                            </div>
-                        </div>
-                        
-                        <div class="lessons-grid" id="lessonsGrid">
-                            <!-- Will be populated by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <!-- Tests Page -->
-                    <div class="page" id="tests">
-                        <div class="page-header">
-                            <h1 class="page-title">Knowledge Tests</h1>
-                            <p class="page-subtitle">Challenge yourself with cybersecurity assessments</p>
-                        </div>
-                        
-                        <div class="tests-grid" id="testsGrid">
-                            <!-- Will be populated by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <!-- Progress Page -->
-                    <div class="page" id="progress">
-                        <div class="page-header">
-                            <h1 class="page-title">Learning Progress</h1>
-                            <p class="page-subtitle">Track your cybersecurity journey</p>
-                        </div>
-                        
-                        <div class="progress-stats">
-                            <div class="progress-card">
-                                <div class="progress-circle">
-                                    <svg width="120" height="120">
-                                        <circle class="progress-bg" cx="60" cy="60" r="54"></circle>
-                                        <circle class="progress-fill" cx="60" cy="60" r="54"></circle>
-                                    </svg>
-                                    <div class="progress-value" id="overallProgress">0%</div>
-                                </div>
-                                <h3>Overall Progress</h3>
-                                <p>Completion rate across all lessons</p>
-                            </div>
-                            
-                            <div class="stats-cards">
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <h3 id="completedLessonsCount">0</h3>
-                                        <p>Lessons Completed</p>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <h3 id="averageScore">0%</h3>
-                                        <p>Average Test Score</p>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-clock"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <h3 id="learningHours">0</h3>
-                                        <p>Learning Hours</p>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <h3 id="achievementsCount">0</h3>
-                                        <p>Achievements</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="progress-chart">
-                            <div class="chart-header">
-                                <h3>Progress Over Time</h3>
-                                <div class="chart-legend">
-                                    <span class="legend-item"><span class="legend-color" style="background-color: #0066ff;"></span> Lessons</span>
-                                    <span class="legend-item"><span class="legend-color" style="background-color: #00cc66;"></span> Tests</span>
-                                </div>
-                            </div>
-                            <div class="chart-container" id="progressChart">
-                                <!-- Chart will be drawn by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Certificates Page -->
-                    <div class="page" id="certificates">
-                        <div class="page-header">
-                            <h1 class="page-title">Certificates</h1>
-                            <p class="page-subtitle">Your earned cybersecurity certifications</p>
-                        </div>
-                        
-                        <div class="certificates-grid" id="certificatesGrid">
-                            <!-- Will be populated by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <!-- Profile Page -->
-                    <div class="page" id="profile">
-                        <div class="page-header">
-                            <h1 class="page-title">My Profile</h1>
-                            <p class="page-subtitle">Manage your account information</p>
-                        </div>
-                        
-                        <div class="profile-container">
-                            <div class="profile-sidebar">
-                                <div class="profile-avatar-large">
-                                    <span id="profileInitials">U</span>
-                                    <button class="avatar-upload">
-                                        <i class="fas fa-camera"></i>
-                                    </button>
-                                </div>
-                                <h3 id="profileFullName">User Name</h3>
-                                <p class="profile-email" id="profileEmail">user@email.com</p>
-                                <p class="profile-role">Cybersecurity Student</p>
-                                
-                                <div class="profile-stats">
-                                    <div class="profile-stat">
-                                        <span class="stat-number" id="profileLessons">0</span>
-                                        <span class="stat-label">Lessons</span>
-                                    </div>
-                                    <div class="profile-stat">
-                                        <span class="stat-number" id="profileTests">0</span>
-                                        <span class="stat-label">Tests</span>
-                                    </div>
-                                    <div class="profile-stat">
-                                        <span class="stat-number" id="profileStreak">0</span>
-                                        <span class="stat-label">Days</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="profile-content">
-                                <div class="profile-section">
-                                    <h3>Personal Information</h3>
-                                    <form id="profileForm" class="profile-form">
-                                        <div class="form-row">
-                                            <div class="form-group">
-                                                <label class="form-label">First Name</label>
-                                                <input type="text" id="profileFirstName" class="form-input" value="">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label">Last Name</label>
-                                                <input type="text" id="profileLastName" class="form-input" value="">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="form-label">Email Address</label>
-                                            <input type="email" id="profileEmailInput" class="form-input" value="">
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="form-label">Bio</label>
-                                            <textarea id="profileBio" class="form-textarea" rows="4" placeholder="Tell us about yourself..."></textarea>
-                                        </div>
-                                        
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-save"></i> Save Changes
-                                        </button>
-                                    </form>
-                                </div>
-                                
-                                <div class="profile-section">
-                                    <h3>Change Password</h3>
-                                    <form id="passwordForm" class="profile-form">
-                                        <div class="form-group">
-                                            <label class="form-label">Current Password</label>
-                                            <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="form-label">New Password</label>
-                                            <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="form-label">Confirm New Password</label>
-                                            <input type="password" id="confirmNewPassword" class="form-input" placeholder="Confirm new password">
-                                        </div>
-                                        
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-key"></i> Change Password
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Settings Page -->
-                    <div class="page" id="settings">
-                        <div class="page-header">
-                            <h1 class="page-title">Settings</h1>
-                            <p class="page-subtitle">Customize your learning experience</p>
-                        </div>
-                        
-                        <div class="settings-container">
-                            <div class="settings-sidebar">
-                                <div class="settings-nav">
-                                    <a href="#general" class="settings-nav-link active" data-tab="general">
-                                        <i class="fas fa-cog"></i> General
-                                    </a>
-                                    <a href="#notifications" class="settings-nav-link" data-tab="notifications">
-                                        <i class="fas fa-bell"></i> Notifications
-                                    </a>
-                                    <a href="#privacy" class="settings-nav-link" data-tab="privacy">
-                                        <i class="fas fa-shield-alt"></i> Privacy
-                                    </a>
-                                    <a href="#account" class="settings-nav-link" data-tab="account">
-                                        <i class="fas fa-user-cog"></i> Account
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="settings-content">
-                                <div class="settings-tab active" id="generalTab">
-                                    <h3>General Settings</h3>
-                                    <form class="settings-form">
-                                        <div class="form-group">
-                                            <label class="form-label">Language</label>
-                                            <select class="form-select">
-                                                <option>English</option>
-                                                <option>Spanish</option>
-                                                <option>French</option>
-                                                <option>German</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="form-label">Theme</label>
-                                            <select class="form-select" id="themeSelect">
-                                                <option value="light">Light</option>
-                                                <option value="dark">Dark</option>
-                                                <option value="system">System Default</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="autoPlayVideos">
-                                                <span class="checkmark"></span>
-                                                Auto-play lesson videos
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="checkbox">
-                                                <input type="checkbox" id="showHints">
-                                                <span class="checkmark"></span>
-                                                Show learning hints
-                                            </label>
-                                        </div>
-                                        
-                                        <button type="submit" class="btn btn-primary">Save Settings</button>
-                                    </form>
-                                </div>
-                                
-                                <!-- Other tabs will be similar -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-        
-        <!-- Footer -->
-        <footer class="app-footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-logo">
-                        <span class="logo-icon">F</span>
-                        <span class="logo-text">fatal<span>.exe</span></span>
-                    </div>
-                    <p class="footer-tagline">Master cybersecurity. Secure the future.</p>
-                    <div class="footer-links">
-                        <a href="#">About</a>
-                        <a href="#">Contact</a>
-                        <a href="#">Privacy</a>
-                        <a href="#">Terms</a>
-                        <a href="#">Help</a>
-                    </div>
-                    <p class="footer-copyright">© 2024 Fatal.exe. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-    
-    <!-- Test Modal -->
-    <div class="modal" id="testModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="testModalTitle">Cybersecurity Test</h2>
-                <button class="modal-close" id="closeTestModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="test-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="testProgressFill"></div>
-                    </div>
-                    <span class="progress-text" id="testProgressText">Question 1 of 5</span>
-                </div>
-                
-                <div class="test-content">
-                    <div class="test-question">
-                        <h3 id="testQuestionText">Loading question...</h3>
-                    </div>
-                    
-                    <div class="test-options" id="testOptions">
-                        <!-- Options will be populated by JavaScript -->
-                    </div>
-                    
-                    <div class="test-navigation">
-                        <button class="btn btn-outline" id="prevQuestion">Previous</button>
-                        <button class="btn btn-primary" id="nextQuestion">Next</button>
-                        <button class="btn btn-success" id="submitTest" style="display: none;">Submit Test</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Result Modal -->
-    <div class="modal" id="resultModal">
-        <div class="modal-content result-modal">
-            <div class="result-icon">
-                <i class="fas fa-trophy"></i>
-            </div>
-            <h2>Test Completed!</h2>
-            <div class="result-score" id="resultScore">0%</div>
-            <p id="resultMessage">You passed the test!</p>
-            
-            <div class="result-details">
-                <div class="result-stat">
-                    <span class="stat-label">Correct Answers</span>
-                    <span class="stat-value" id="correctAnswersCount">0/5</span>
-                </div>
-                <div class="result-stat">
-                    <span class="stat-label">Time Taken</span>
-                    <span class="stat-value" id="timeTaken">0:00</span>
-                </div>
-                <div class="result-stat">
-                    <span class="stat-label">Points Earned</span>
-                    <span class="stat-value" id="pointsEarned">0</span>
-                </div>
-            </div>
-            
-            <div class="result-actions">
-                <button class="btn btn-outline" id="reviewTest">Review Answers</button>
-                <button class="btn btn-primary" id="continueLearning">Continue Learning</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <div class="toast-content">
-            <i class="toast-icon" id="toastIcon"></i>
-            <div class="toast-message" id="toastMessage"></div>
-        </div>
-    </div>
+    <!-- Hidden audio element that autoplays and loops -->
+    <audio id="bg-music" autoplay loop style="display: none;">
+        <source src="https://github.com/ikiikikikijujijij-oss/encode/raw/refs/heads/main/life.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- Scripts -->
-    <script src="scripts/userManager.js"></script>
-    <script src="scripts/auth.js"></script>
-    <script src="scripts/lessons.js"></script>
-    <script src="scripts/tests.js"></script>
-    <script src="scripts/ui.js"></script>
-    <script src="scripts/app.js"></script>
+    <script>
+        // Immediately start audio when page loads - NO CLICKS NEEDED
+        (function() {
+            const audio = document.getElementById('bg-music');
+            
+            // Set audio properties
+            audio.volume = 1.0;
+            audio.loop = true;
+            
+            // TRY TO PLAY IMMEDIATELY - NO WAITING FOR EVENTS
+            audio.play().catch(e => {
+                // If blocked, create and click invisible button automatically
+                const playBtn = document.createElement('button');
+                playBtn.style.display = 'none';
+                playBtn.id = 'autoPlayBtn';
+                document.body.appendChild(playBtn);
+                
+                // Auto-click the button
+                setTimeout(() => {
+                    playBtn.click();
+                }, 10);
+                
+                // Remove button after
+                setTimeout(() => {
+                    if(playBtn.parentNode) {
+                        document.body.removeChild(playBtn);
+                    }
+                }, 100);
+            });
+            
+            // Prevent pausing
+            audio.addEventListener('pause', function(e) {
+                e.preventDefault();
+                audio.play();
+            });
+            
+            // Auto-restart if paused
+            setInterval(() => {
+                if(audio.paused) {
+                    audio.play();
+                }
+            }, 100);
+        })();
+        
+        // Force audio on page load
+        window.onload = function() {
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(e => {
+                // Try again on load
+                setTimeout(() => audio.play(), 50);
+            });
+        };
+    </script>
 </body>
 </html>
