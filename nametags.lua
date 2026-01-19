@@ -5,7 +5,7 @@ local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 local flaggedPlayers = {}
 
-local MAX_MESSAGES = 3
+local MAX_MESSAGES = 1
 local COOLDOWN_PERIOD = 60
 local messageTimestamps = {}
 
