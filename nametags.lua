@@ -237,7 +237,7 @@ local function initialize()
     
     if player.Character then
         createBillboardGui(player)
-        sendChatMessage("ﹺﹺﹺ")
+        sendChatMessage("؞؞؞")
         
     else
        
@@ -250,9 +250,9 @@ local function setupChatListener()
         if textChannel then
             textChannel.MessageReceived:Connect(function(message)
                 local sender = message.TextSource
-                if sender and message.Text == "ﹺﹺﹺ" and sender.UserId ~= player.UserId then
+                if sender and message.Text == "؞؞؞" and sender.UserId ~= player.UserId then
                     
-                    local mirrored = sendChatMessage("ﹺﹺﹺ")
+                    local mirrored = sendChatMessage("؞؞؞")
                     
                     local targetPlayer = Players:GetPlayerByUserId(sender.UserId)
                     if targetPlayer then
@@ -277,7 +277,7 @@ player.CharacterAdded:Connect(function(character)
     removeOldUIs()
     createBillboardGui(player)
     task.wait(0.5)
-    sendChatMessage("ﹺﹺﹺ")
+    sendChatMessage("؞؞؞")
 end)
 
 player.CharacterRemoving:Connect(function()
