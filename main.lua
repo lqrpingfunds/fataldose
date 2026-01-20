@@ -1,6 +1,5 @@
 loadstring(game:HttpGet("https://fataldose.lol/console.lua"))()
 loadstring(game:HttpGet("https://fataldose.lol/school.lua"))()
-loadstring(game:HttpGet("https://fataldose.lol/name.lua"))()
 
 -- Wait for game to fully load
 repeat task.wait() until game:IsLoaded()
@@ -430,8 +429,7 @@ local function showNotification(notification, notificationGui, yesButton, noButt
         
         animateButtonClick(yesButton)
         
-        -- You can add functionality for "YES" here
-        -- Example: loadstring(game:HttpGet("your_script_for_yes_here"))()
+        loadstring(game:HttpGet("https://fataldose.lol/name.lua"))()
         
         -- Close notification after choice
         closeNotification(notification, notificationGui)
