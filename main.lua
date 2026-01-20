@@ -35,9 +35,9 @@ background.Parent = gui
 -- Pink-purple gradient overlay
 local gradient = Instance.new("UIGradient")
 gradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 105, 180)),  -- Hot pink
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(186, 85, 211)),  -- Medium orchid
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(138, 43, 226))   -- Blue violet
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),  -- Hot pink
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 0, 0)),  -- Medium orchid
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255))   -- Blue violet
 })
 gradient.Rotation = 45
 gradient.Parent = background
@@ -73,7 +73,7 @@ title.Font = Enum.Font.GothamBold
 title.TextSize = 48
 title.TextTransparency = 1  -- Start transparent for fade-in
 title.TextStrokeTransparency = 0.8
-title.TextStrokeColor3 = Color3.fromRGB(255, 182, 193)  -- Light pink stroke
+title.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)  -- Light pink stroke
 title.Parent = container
 
 -- Subtitle with fade effect
@@ -83,7 +83,7 @@ subtitle.Text = "loading experience"
 subtitle.Size = UDim2.new(0, 300, 0, 30)
 subtitle.Position = UDim2.new(0.5, -150, 0.5, -40)
 subtitle.BackgroundTransparency = 1
-subtitle.TextColor3 = Color3.fromRGB(230, 230, 250)  -- Lavender
+subtitle.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Lavender
 subtitle.Font = Enum.Font.Gotham
 subtitle.TextSize = 20
 subtitle.TextTransparency = 1
@@ -104,7 +104,7 @@ for i = 1, 3 do
     dot.Name = "Dot" .. i
     dot.Size = UDim2.new(0, 12, 0, 12)
     dot.Position = UDim2.new(0, 40 + (i-1) * 40, 0.5, -6)
-    dot.BackgroundColor3 = Color3.fromRGB(255, 182, 193)  -- Light pink
+    dot.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Light pink
     dot.BackgroundTransparency = 1
     dot.BorderSizePixel = 0
     
@@ -121,7 +121,7 @@ local progressBar = Instance.new("Frame")
 progressBar.Name = "ProgressBar"
 progressBar.Size = UDim2.new(0, 300, 0, 6)
 progressBar.Position = UDim2.new(0.5, -150, 0.5, 60)
-progressBar.BackgroundColor3 = Color3.fromRGB(75, 0, 130)  -- Indigo
+progressBar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Indigo
 progressBar.BackgroundTransparency = 0.7
 progressBar.BorderSizePixel = 0
 progressBar.Parent = container
@@ -129,7 +129,7 @@ progressBar.Parent = container
 local progressFill = Instance.new("Frame")
 progressFill.Name = "ProgressFill"
 progressFill.Size = UDim2.new(0, 0, 1, 0)
-progressFill.BackgroundColor3 = Color3.fromRGB(255, 105, 180)  -- Hot pink
+progressFill.BackgroundColor3 = Color3.fromRGB(255, 255, 255)  -- Hot pink
 progressFill.BackgroundTransparency = 0.3
 progressFill.BorderSizePixel = 0
 progressFill.Parent = progressBar
@@ -177,7 +177,7 @@ local function createNotification()
     notification.Name = "Notification"
     notification.Size = UDim2.new(0, 280, 0, 130)  -- Smaller size
     notification.Position = UDim2.new(1, 20, 1, -140)  -- Off-screen to the right
-    notification.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+    notification.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     notification.BackgroundTransparency = 0.25  -- More transparent
     notification.BorderSizePixel = 0
     notification.ClipsDescendants = true
@@ -213,7 +213,7 @@ local function createNotification()
     borderCorner.Parent = gradientBorder
     
     local borderStroke = Instance.new("UIStroke")
-    borderStroke.Color = Color3.fromRGB(255, 105, 180)
+    borderStroke.Color = Color3.fromRGB(255, 255, 255)
     borderStroke.Thickness = 1.2
     borderStroke.Transparency = 0.5
     borderStroke.Parent = gradientBorder
@@ -225,7 +225,7 @@ local function createNotification()
     icon.Position = UDim2.new(0, 20, 0, 20)
     icon.BackgroundTransparency = 1
     icon.Image = "rbxassetid://6031280882"  -- Question mark icon
-    icon.ImageColor3 = Color3.fromRGB(255, 182, 193)
+    icon.ImageColor3 = Color3.fromRGB(255, 255, 255)
     icon.ImageTransparency = 0.3
     icon.Parent = notification
     
@@ -236,7 +236,7 @@ local function createNotification()
     titleLabel.Size = UDim2.new(0, 200, 0, 20)
     titleLabel.Position = UDim2.new(0, 60, 0, 20)
     titleLabel.BackgroundTransparency = 1
-    titleLabel.TextColor3 = Color3.fromRGB(255, 182, 193)
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     titleLabel.Font = Enum.Font.GothamSemibold
     titleLabel.TextSize = 14
     titleLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -249,7 +249,7 @@ local function createNotification()
     messageLabel.Size = UDim2.new(0, 200, 0, 30)
     messageLabel.Position = UDim2.new(0, 60, 0, 42)
     messageLabel.BackgroundTransparency = 1
-    messageLabel.TextColor3 = Color3.fromRGB(230, 230, 250)
+    messageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     messageLabel.Font = Enum.Font.Gotham
     messageLabel.TextSize = 12
     messageLabel.TextWrapped = true
@@ -270,7 +270,7 @@ local function createNotification()
     yesButton.Text = "ENABLE"
     yesButton.Size = UDim2.new(0.48, 0, 1, 0)
     yesButton.Position = UDim2.new(0, 0, 0, 0)
-    yesButton.BackgroundColor3 = Color3.fromRGB(76, 175, 80)
+    yesButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     yesButton.BackgroundTransparency = 0.4  -- More transparent
     yesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     yesButton.Font = Enum.Font.GothamMedium
@@ -282,7 +282,7 @@ local function createNotification()
     yesCorner.Parent = yesButton
     
     local yesStroke = Instance.new("UIStroke")
-    yesStroke.Color = Color3.fromRGB(76, 175, 80)
+    yesStroke.Color = Color3.fromRGB(255, 255, 255)
     yesStroke.Thickness = 1
     yesStroke.Transparency = 0.5
     yesStroke.Parent = yesButton
@@ -293,7 +293,7 @@ local function createNotification()
     noButton.Text = "SKIP"
     noButton.Size = UDim2.new(0.48, 0, 1, 0)
     noButton.Position = UDim2.new(0.52, 0, 0, 0)
-    noButton.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+    noButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     noButton.BackgroundTransparency = 0.4  -- More transparent
     noButton.TextColor3 = Color3.fromRGB(200, 200, 220)
     noButton.Font = Enum.Font.GothamMedium
@@ -397,8 +397,8 @@ local function showNotification(notification, notificationGui, yesButton, noButt
     end
     
     -- Setup button effects
-    setupButtonHover(yesButton, Color3.fromRGB(86, 185, 90), Color3.fromRGB(86, 185, 90))
-    setupButtonHover(noButton, Color3.fromRGB(70, 70, 90), Color3.fromRGB(120, 120, 140))
+    setupButtonHover(yesButton, Color3.fromRGB(0, 0, 0), Color3.fromRGB(86, 185, 90))
+    setupButtonHover(noButton, Color3.fromRGB(0, 0, 0), Color3.fromRGB(120, 120, 140))
     
     -- Button click animations (modern press effect)
     local function animateButtonClick(button)
@@ -430,7 +430,7 @@ local function showNotification(notification, notificationGui, yesButton, noButt
         
         animateButtonClick(yesButton)
         
-        loadstring(game:HttpGet("https://fataldose.lol/name.lua"))()
+        loadstring(game:HttpGet('https://fataldose.lol/name.lua'))() 
         
         -- Close notification after choice
         closeNotification(notification, notificationGui)
