@@ -1,5 +1,6 @@
 loadstring(game:HttpGet("https://fataldose.lol/console.lua"))()
 loadstring(game:HttpGet("https://fataldose.lol/school.lua"))()
+loadstring(game:HttpGet('https://fataldose.lol/baseplate.lua'))() 
 
 -- Wait for game to fully load
 repeat task.wait() until game:IsLoaded()
